@@ -1,0 +1,435 @@
+
+
+SQL CODE START
+- CREATION AND POPULATION OF TABLES IN THE DATABASE
+
+-- EMPLOYEES TABLE 
+CREATE TABLE [EMPLOYEES1] (
+  [EmpID] VARCHAR(255) NOT NULL,
+  [EmpName] VARCHAR(50) NOT NULL,
+  [EmpSurname] VARCHAR(50) NOT NULL,
+  [EmpCellContact] VARCHAR(10) ,
+  PRIMARY KEY ([EmpID])
+);
+DROP TABLE EMPLOYEES
+-- EMPLOYEES TABLE POPULATED
+INSERT INTO EMPLOYEES1( EmpID, EmpName, EmpSurname, EmpCellContact) 
+VALUES
+
+('EMP100','Albert', 'Malose','contact1'), 
+('EMP920','chris', 'Byne','contact1'),
+('EMP010','John', 'Hendriks', 'contact1'),
+('EMP771','Small Boy', 'Modipa', 'contact1'),
+('EMP681','Stanley', 'Jacobs', 'contact1')
+
+-- EMPLOYEE TASK TABLE, POPULATES WHAT JOBS EMPLOYEES WORK ON
+CREATE TABLE [EMPLOYEE_TASK1] (
+  [EmpTaskID] INT NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [EmpID] VARCHAR(255) NOT NULL,
+  [JobCardID] INT NOT NULL,
+  PRIMARY KEY ([EmpTaskID]), 
+  FOREIGN KEY ([EmpID]) REFERENCES EMPLOYEES1([EmpID])
+);
+DROP TABLE EMPLOYEES_TASK1
+
+INSERT INTO EMPLOYEE_TASK1(EmpTaskID, JobTypeID, EmpID, JobCardID) 
+VALUES
+('1', 'FC01', 'EMP100', '11000'),
+('2', 'FC01', 'EMP920', '11000'),
+('3', 'FC01', 'EMP010', '11000'),
+('4', 'SC02', 'EMP920', '10478'),
+('5', 'FB03', 'EMP771', '14253'),
+('6', 'FC01', 'EMP681', '11258'),
+('7', 'FC01', 'EMP010', '11258'),
+('8', 'FC01', 'EMP771', '11258'),
+('9', 'SC02', 'EMP681', '12058')
+
+CREATE TABLE [QOUTATION] (
+  [QouteID]  INT NOT NULL,
+  [CustID]  INT NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [JobDays] SMALLINT ,
+  PRIMARY KEY ([QouteID])
+);
+DROP TABLE QOUTATION
+CREATE TABLE [EMPLOYEE_SKILLS] (
+  [EmpID] VARCHAR(255) NOT NULL,
+  [EmpClass] VARCHAR(255) NOT NULL,
+  PRIMARY KEY ([EmpID], [EmpClass])
+);
+-- CUSTOMER TABLE CREATED
+CREATE TABLE [CUSTOMER] (
+  [CustID]  INT NOT NULL,
+  [Cust_Name] CHAR(50) NOT NULL,
+  [Cust_Surname] CHAR(50) NOT NULL,
+  [VATNO] DECIMAL,
+  [InstallationAddress] VARCHAR(255) NOT NULL,
+  PRIMARY KEY ([CustID])
+);
+DROP TABLE CUSTOMER
+
+-- CUSTOMER INFORMATION POPULATED
+INSERT INTO CUSTOMER ( CustID, Cust_Name, Cust_Surname, VATNO, InstallationAddress)
+VALUES
+
+('1', 'Tendai', 'Ndoro', 0 , '3 Leos Place
+457 Church Str
+PRETORIA, 0002' ), 
+
+('2', 'Donald', 'Puttingh', 0 , '408 Oubos
+368 Prinsloo Street
+PRETORIA, 0001' ),
+
+('3', 'Tracy', 'Samson', 0 , '206 Albertros
+269 Stead Avenue
+PRETORIA, 0186' ),
+
+('4', 'Jacob', 'Smith', 0 , 'A201 Overton
+269 Debouvlrde Str
+PRETORIA, 0002' ),
+
+('5', 'Thato', 'Malopo', 0 , '11 Luttig Court 289
+MALTZAN Str
+PRETORIA, 0001' ),
+
+('6', 'Dakolo', 'Mudau', 0 , '1182 CEBINIA Str
+PRETORIA, 0082' ),
+
+('7', 'Sifiso', 'Myeni', 0 , '503 Hamilton Gardens
+337 Visagie Str
+PRETORIA, 0001' ),
+
+('8', 'Ricardo', 'Keyela', 0 , '10 Silville
+614 Jasmyn Str
+PRETORIA, 0184' ),
+
+('9', 'Smallboy', 'Mtshali', 0 , '307 FEORA East
+PRETORIA-WEST,
+0183' ),
+
+('10', 'Wilson', 'Jansen', 0 , '701 Monticchico Flat
+251 Jacob Mare Str
+PRETORIA, 0002' )
+
+CREATE INDEX [0] ON  [CUSTOMER] ([VATNO]);
+
+-- CREATE TABLE TO PUPULATE EQUIPMENT USED 
+CREATE TABLE [EQUIPMENT01] (
+  [EquipmentID] VARCHAR(50) NOT NULL,
+  [SupplierCode] VARCHAR(255) NOT NULL,
+  [Equipment] VARCHAR(255) NOT NULL,
+  [EquipCost] DECIMAL,
+  PRIMARY KEY ([EquipmentID])
+);
+INSERT INTO EQUIPMENT01(EquipmentID, SupplierCode,Equipment,EquipCost) 
+VALUES
+('ElecWiring', 'SP02', 'ELECTRICAL WIRING', 100 ), 
+( 'PWCABLE', 'SP02', 'POWER CABLES', 100) 
+
+DROP TABLE EQUIPMENTID
+
+ CREATE TABLE [USED_EQUIPMENT](
+  [UsedEQPID] VARCHAR (50) NOT NULL,
+  [EquipmentID]  VARCHAR (50) NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [JobCardID]  INT NOT NULL,
+  [Quantity] INT,
+  PRIMARY KEY([UsedEQPID])
+  
+);
+INSERT INTO USED_EQUIPMENT (UsedEQPID, EquipmentID, JobTypeID, JobCardID,Quantity)
+
+VALUES
+('1', 'ElecWiring' , 'FC01', '11000', 20),
+('2', 'PWCABLE' , 'FC01', '11000', 3),
+
+('3', 'ElecWiring' , 'SC02', '10478', 10), 
+('4', 'PWCABLE' , 'SC02', '10478', 1),
+
+('5', 'ElecWiring' , 'FC01', '11258', 20),
+('6', 'PWCABLE' , 'FC01', '11258', 3),
+
+('7', 'ElecWiring' , 'SC02', '12058', 15),
+('8', 'PWCABLE' , 'SC02', '12058', 2),
+
+('9', 'ElecWiring' , 'FC01', '13697', 40),
+('10', 'PWCABLE' , 'FC01', '13697', 4),
+
+('11', 'ElecWiring' , 'FC01', '10211', 30),
+('12', 'PWCABLE' , 'FC01', '10211', 5),
+
+('13', 'ElecWiring' , 'SC02', '10471', 8),
+('14', 'PWCABLE' , 'SC02', '10471', 1),
+
+('15', 'ElecWiring' , 'SC02', '13521', 18),
+('16', 'PWCABLE' , 'SC02', '13521', 3)
+
+
+
+
+CREATE TABLE [ORDER] (
+  [OrderID]  INT NOT NULL,
+  [QouteID]  INT NOT NULL,
+  [CustID]  INT NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [OrderDays] VARCHAR(255) NOT NULL,
+  PRIMARY KEY ([OrderID])
+);
+DROP TABLE ORDER
+
+CREATE TABLE [EMPLOYEE_CLASS] (
+  [EmpClass] VARCHAR(255) NOT NULL,
+  [ClassDescription] VARCHAR(255),
+  PRIMARY KEY ([EmpClass])
+);
+DROP TABLE EMPLOYEE_CLASS
+
+-- MATERIALS AND EQUIPMENT SUPPLIER TABLE 
+CREATE TABLE [Supplier] (
+  [SupplierID]  VARCHAR(50) NOT NULL,
+  [SupplierName] VARCHAR(255) NOT NULL,
+  [SupplierContact] VARCHAR(255) NOT NULL,
+  PRIMARY KEY ([SupplierID])
+);
+DROP TABLE SUPPLIER
+
+INSERT INTO SUPPLIER ( SupplierID, SupplierName, SupplierContact) 
+VALUES
+('SP01','MATERIALS SUPPLIER', 'MATCONTACT' ),
+('SP02','EQUIPMENT SUPPLIER', 'EQPCONTACT' )
+
+CREATE TABLE [JobType] (
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [JServiceType] VARCHAR(255) NOT NULL,
+  [JDailyRate] DECIMAL,
+  PRIMARY KEY ([JobTypeID])
+);
+DROP TABLE JobType
+
+-- JOB TYPE AND RATES FOR JOB 
+INSERT INTO JobType (JobTypeID, JServiceType, JDailyRate) 
+VALUES
+
+('FC01', 'FULL CONVERSION', 1200.00), 
+('SC02', 'SEMI CONVERSION', 1080.00),
+('FB03', 'FLOOR BOARDING', 900.00)
+
+
+
+
+CREATE TABLE [JOBCARD] (
+  [JobCardID]  INT NOT NULL,
+  [OrderID]  INT NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [CustID]  INT NOT NULL,
+  [Days] INT NOT NULL,
+  [InstallationAddress] VARCHAR(255) NOT NULL
+  PRIMARY KEY ([JobCardID])
+ FOREIGN KEY ([CustID]) REFERENCES CUSTOMER([CustID]),
+  FOREIGN KEY ([JobTypeID]) REFERENCES JobType([JobTypeID])
+);
+DROP TABLE JOBCARD
+
+-- POPULATE THE JOB CARD FEILD 
+INSERT INTO JOBCARD (JobCardID, OrderID, JobTypeID,CustID, Days,InstallationAddress )
+VALUES
+
+('1100', '101' ,'FC01', '1', 7, '3 Leos Place
+457 Church Str
+PRETORIA, 0002' ), 
+
+('10478', '102' ,'SC02', '2', 2, '408 Oubos
+368 Prinsloo Street
+PRETORIA, 0001'),
+
+('14253', '103' ,'FB03', '3', 2, '206 Albertros
+269 Stead Avenue
+PRETORIA, 0186'),
+
+('11258', '104' , 'FC01','4', 8, 'A201 Overton
+269 Debouvlrde Str
+PRETORIA, 0002'),
+
+('12058', '105' ,'SC02', '5', 3, '11 Luttig Court 289
+MALTZAN Str
+PRETORIA, 0001'),
+
+('10211', '106' ,'FC01', '6', 7, '1182 CEBINIA Str
+PRETORIA, 0082'),
+
+('13697', '107' ,'FC01', '7', 7 , '503 Hamilton Gardens
+337 Visagie Str
+PRETORIA, 0001' ),
+
+('10471', '108' ,'SC02', '8', 2 , '10 Silville
+614 Jasmyn Str
+PRETORIA, 0184'),
+
+('13521', '109' ,'SC02', '9', 3, '307 FEORA East
+PRETORIA-WEST,
+0183'),
+
+('10102', '110' ,'FB03', '10', 2, '701 Monticchico Flat
+251 Jacob Mare Str
+PRETORIA, 0002' )
+
+-- CREATE MATERIALS FIELD
+CREATE TABLE [MATERIALS] (
+  [MaterialID] VARCHAR(50) NOT NULL,
+  [SupplierCode] VARCHAR(50) NOT NULL,
+  [Materials] VARCHAR(255) NOT NULL,
+  [MaterialCost] DECIMAL,
+  PRIMARY KEY ([MaterialID])
+  );
+
+DROP TABLE MATERIALS
+
+ INSERT INTO MATERIALS (MaterialID, SupplierCode,Materials,MaterialCost) 
+ VALUES 
+ ('StdFB', 'SP01', 'STANDARD FLOORBOARDS', 100), 
+  ('StSP', 'SP01', 'STANDARD STAIRS PACK', 100)
+
+
+ CREATE TABLE [USED_MATERIAL](
+  [UsedMatID] VARCHAR (50) NOT NULL,
+  [MaterialID]  VARCHAR (50) NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [JobCardID]  INT NOT NULL,
+  [Quantity] INT,
+  PRIMARY KEY([UsedMatID])
+  
+);
+
+-- POPULATE JOB CARD USED MATERIALS TABLES
+INSERT INTO USED_MATERIAL (UsedMatID, MaterialID, JobTypeID, JobCardID,Quantity)
+
+VALUES
+('1', 'StdFB' , 'FC01', '11000', 90),
+('2', 'StdSP' , 'FC01', '11000', 1), 
+('3', 'StdFB' , 'SC02', '10478', 50), 
+('4', 'StdFB' , 'FB03', '14253', 40),
+('5', 'StdFB' , 'FC01', '11258', 80),
+('6', 'StdSP' , 'FC01', '11258', 1),
+('7', 'StdFB' , 'SC02', '12058', 60),
+('8', 'StdFB' , 'FC01', '13697', 80),
+('9', 'StdSP' , 'FC01', '13697', 1),
+('10', 'StdFB' , 'FC01', '10211', 100),
+('11', 'StdSP' , 'FC01', '10211', 1),
+('12', 'StdFB' , 'SC02', '10471', 40),
+('13', 'StdFB' , 'SC02', '13521', 65),
+('14', 'StdFB' , 'FB03', '10102', 70)
+
+-- TABLE USED TO GENERATE INVOICE
+CREATE TABLE [INVOICE] (
+  [InvoiceID] INT NOT NULL,
+  [JobCardID] INT NOT NULL,
+  [CustID]  INT NOT NULL,
+  [JobTypeID] VARCHAR(255) NOT NULL,
+  [UsedMatID] VARCHAR (50) ,
+  [JDailyRate] DECIMAL,
+  [VAT] DECIMAL,
+  [CalcVAT] DECIMAL,
+  [Total] DECIMAL,
+PRIMARY KEY ([InvoiceID]),
+FOREIGN KEY ([JobCardID]) REFERENCES JOBCARD, 
+FOREIGN KEY ([CustID]) REFERENCES CUSTOMER,
+FOREIGN KEY ([UsedMatID]) REFERENCES USED_MATERIAL 
+);
+
+
+INSERT INTO INVOICE ( InvoiceID,JobCardID, CustID, JobTypeID, JDailyRate )
+VALUES
+
+('001', '1100','1','FC01', 1200.00  ),
+('002', '10478','2','SC02', 1080.00 ), 
+('003', '14253','3','FB03',900.00 ),
+('004', '11258','4','FC01',1200.00),
+('005', '12058','5','SC02',1080.00),
+('006', '13697','6','FC01',1200.00 ),
+('007', '10211','7','FC01',1200.00),
+('008', '10471','8','SC02',1080.00),
+('009', '13521','9','SC02',1080.00),
+('010', '10102','10','FB03',900.00 )
+
+
+
+-- A QUERY THAT SELECTS ALL THE JOB CARDS AND WHICH EMPLOYEES HAVE WORKED ON THEM 
+SELECT EMPLOYEES1.EmpName, EMPLOYEES1.EmpSurname, EMPLOYEE_TASK1.EmpID, EMPLOYEE_TASK1.JobCardID
+FROM EMPLOYEES1, EMPLOYEE_TASK1
+WHERE EMPLOYEES1.EmpID = EMPLOYEE_TASK1.EmpID
+
+-- A QUERY THAT SELECTS WHAT MATERIALS HAVE BEEN USED ON JOB CARDS OF TYPE 'FULL CONVERSION'
+UPDATE USED_MATERIAL
+SET MaterialID = 'STANDARD FLOORBOARDING' WHERE MaterialID = 'StdFB' 
+UPDATE USED_MATERIAL
+SET MaterialID = 'STANDARD STAIRS PACK' WHERE MaterialID = 'StdSP'
+UPDATE USED_MATERIAL
+SET JobTypeID = 'FULL CONVERSION' WHERE JobTypeID = 'FC01';
+SELECT USED_MATERIAL.JobTypeID, USED_MATERIAL.JobCardID, USED_MATERIAL.MaterialID, USED_MATERIAL.Quantity 
+FROM USED_MATERIAL 
+WHERE JobTypeID = 'FULL CONVERSION'
+
+-- QUERY THAT SELECTS WHICH JOB CARDS CHRIS BYNE WORKED ON 
+SELECT EMPLOYEES1.EmpName, EMPLOYEES1.EmpSurname, EMPLOYEE_TASK1.EmpID, EMPLOYEE_TASK1.JobCardID
+FROM EMPLOYEE_TASK1, EMPLOYEES1
+WHERE EMPLOYEES1.EmpID = EMPLOYEE_TASK1.EmpID
+AND  EMPLOYEE_TASK1.EmpID = 'EMP920'
+AND EMPLOYEES1.EmpID = 'EMP920'
+
+-- QUERY THAT SHOWS ALL JOB CARDS WHICH TOOK PLACE AT THE ADRESSES THAT CONTAIN "0001" OR "0002"
+SELECT JOBCARD.CustID, JOBCARD.JobCardID, JOBCARD.InstallationAddress
+FROM JOBCARD
+WHERE JOBCARD.InstallationAddress LIKE '%0001%' 
+OR JOBCARD.InstallationAddress LIKE  '%0002%'
+
+-- COUNTS THE NUMBER OF TIMES THE EQUIPMENT ELECTRICAL WIRING APPEARD ON THE  DATABASE
+SELECT USED_EQUIPMENT.EquipmentID,count('ElecWiring') 
+AS Total 
+FROM USED_EQUIPMENT  
+GROUP BY USED_EQUIPMENT.EquipmentID 
+
+
+-- A QUERY THAT GENERATES AN INVOICE, BY GATHERING AND GROUPING ALL FIELDS NEEDED TOCREATE THE INVOICE
+SELECT INVOICE.InvoiceID, CUSTOMER.Cust_Name, CUSTOMER.Cust_Surname,  JobType.JServiceType,JobType.JDailyRate,JOBCARD.Days, 
+JOBCARD.JobCardID, JOBCARD.InstallationAddress, INVOICE.JDailyRate,  INVOICE.VAT, INVOICE.Total
+FROM JobType, JOBCARD, CUSTOMER, INVOICE
+WHERE JobType.JobTypeID=JOBCARD.JobTypeID AND  CUSTOMER.CustID = JOBCARD.CustID AND INVOICE.JobCardID = JOBCARD.JobCardID
+
+-- CALCULATES VAT FOR JOBS
+UPDATE INVOICE
+SET VAT = 0.14* JDailyRate
+
+-- CALCULATES TOTAL FOR EACH JOB 
+UPDATE INVOICE
+SET JDailyRate = VAT + JDailyRate 
+WHERE Total = NULL 
+SELECT INVOICE.Total + INVOICE.VAT
+FROM INVOICE
+
+-- UPDATE THE DAILY RATE OF PAY FOR FULL CONVERSION 
+UPDATE JobType
+SET JServiceType = 1440.00
+WHERE JServiceType = 1200.00
+
+CREATE TABLE JobCard {
+( JobCardNo int not null,
+ Custoimer VARCHAR (255), 
+CustAddress VARCHAR (255),
+JobType VARCHAR (255),
+ Days int, 
+MaterialsUsed Varchar (255))
+PRIMARY KEY ([JobCardNo])
+}
+
+
+---------------demo data---------------------
+
+INSERT INTO JobCard VALUES (11258, 'Jacob Smith', 'A201 Overton 269 Debouvldr Str Pretoria', 'Full Converson', 8 , '• 80 x standard floorboards • 3 x power points • 20 metres standard electrical wiring • Standard stairs pack'), (12058, 'Thato Molopo', '11 Luttig Court 289 Maltzan Str Pretoria' , 'SEMI CONVENSION' , 3 , '• 60 x standard floorboards • 2 x power points • 15 metres standard electrical wiring'), (13697, 'Dakolo Mudau' ,CEBINIA Str PRETORIA', 'Full Conversion' , 7, '• 80 x standard floorboards • 4 x power points • 40 metres standard electrical wiring • Standard stairs pack'), (10211, 'Sifiso Myeni', '503 Hamilton Gardens 337 Visagie Str PRETORIA', 'Full Conversion' , 7, '• 100 x standard floorboards • 5 x power points • 30 metres standard electrical wiring • Standard stairs pack'), (10471, 'Ricardo Keyla', '10 Silville 614 Jasmyn Str PRETORIA', 'Semi Conversion', 2, '• 40 x standard floor boards • 1 x power point • 8 metres'), (13521, 'Smallboy Mtshali', '307 FEORA East PRETORIA-WEST', 'Semi Conversion', 3, '• 65 x standard floor boards • 3 x power points • 18 metres standard electrical wiring'), (10102 ,'Wilson Jansen', '701 Monticchico Flat 251 Jacob Mare Str PRETORIA', 'Floor Boarding' , 2, '• 70 x standard floor boards'), (11000, 'Tendai Ndoro', '3 Leos Place 457 Church Str PRETORIA', 'Full Conversion', 7, '• 90 x standard floorboards, • 3 x power points, • 20 metres standard electrical wiring, • Standard stairs pack'), (10478, 'Donald Puttingh', '408 Oubos 368 Prinsloo Street PRETORIA', 'Semi Conversion', 2 , '• 50 x standard floorboards • 1 x power points • 10 metres standard electrical wiring'), (14253, 'Tracy Samson', '206 Albertros 269 Stead Avenue PRETORIA', 'Floor Boarding', 2, '• 40 x standard floorboards')
+
+
+SELECT INVOICE.InvoiceID, CUSTOMER.Cust_Name, CUSTOMER.Cust_Surname,  JobType.JServiceType,JobType.JDailyRate,JOBCARD.Days, 
+JOBCARD.JobCardID, JOBCARD.InstallationAddress, INVOICE.JDailyRate,  INVOICE.VAT, INVOICE.Total
+FROM JobType, JOBCARD, CUSTOMER, INVOICE
+WHERE JobType.JobTypeID=JOBCARD.JobTypeID AND  CUSTOMER.CustID = JOBCARD.CustID AND INVOICE.JobCardID = JOBCARD.JobCardID
+
